@@ -3,3 +3,4 @@ version: '${project.version}'
 main: me.hsgamer.grimcheckup.GrimCheckup
 api-version: '1.13'
 depend: [ GrimAC ]
+folia-supported: true
