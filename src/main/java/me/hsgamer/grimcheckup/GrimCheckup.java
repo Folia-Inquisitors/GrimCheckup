@@ -38,6 +38,8 @@ public final class GrimCheckup extends SimplePlugin implements Listener {
             }
         });
 
+        config.save();
+
         registerListener(this);
     }
 
