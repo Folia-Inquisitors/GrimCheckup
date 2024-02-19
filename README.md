@@ -9,10 +9,6 @@ mvn clean install
 
 This offers a bigger config for grim where you can disable and enable checks. It is highly optimized and heavily tested. Feel free to constribute.
 
-### Player commands 
-
-none
-
 ## Default Config
 
 ```
