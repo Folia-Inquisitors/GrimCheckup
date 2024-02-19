@@ -94,11 +94,11 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.MWHunter</groupId>
-            <artifactId>GrimAC</artifactId>
-            <version>LOCAL</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/grimac.jar</systemPath>
+            <groupId>com.github.GrimAnticheat</groupId>
+            <artifactId>Grim</artifactId>
+            <version>60f503d</version>
+            <classifier>all</classifier>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

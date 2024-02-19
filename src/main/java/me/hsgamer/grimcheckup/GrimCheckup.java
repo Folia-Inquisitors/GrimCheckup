@@ -13,7 +13,9 @@ import me.hsgamer.hscore.config.PathString;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public final class GrimCheckup extends SimplePlugin implements Listener {
     private final BukkitConfig config = new BukkitConfig(this);
