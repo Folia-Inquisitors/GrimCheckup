@@ -1,7 +1,7 @@
 # GrimCheckup
 Website: None
 
-# Unofficial Discord 
+# Official Discord 
 
 https://discord.gg/aT9z7q7hX8
 
