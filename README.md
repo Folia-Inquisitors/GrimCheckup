@@ -1,6 +1,10 @@
 # GrimCheckup
 Website: None
 
+# Unofficial Discord 
+
+https://discord.gg/aT9z7q7hX8
+
 ## Building instructions
 
 mvn clean install
