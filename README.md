@@ -11,7 +11,7 @@ mvn clean install
  
 ## Description
 
-This offers a bigger config for grim where you can disable and enable checks. It is highly optimized and heavily tested. Feel free to constribute.
+This offers a bigger config for Grim where you can disable and enable checks. It is highly optimized and heavily tested. Feel free to constribute.
 
 ## Default Config
 
