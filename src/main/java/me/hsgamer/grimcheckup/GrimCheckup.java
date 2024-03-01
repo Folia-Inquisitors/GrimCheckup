@@ -1,7 +1,7 @@
 package me.hsgamer.grimcheckup;
 
-import ac.grim.grimac.AbstractCheck;
-import ac.grim.grimac.events.FlagEvent;
+import ac.grim.grimac.api.AbstractCheck;
+import ac.grim.grimac.api.events.FlagEvent;
 import ac.grim.grimac.manager.CheckManager;
 import ac.grim.grimac.player.GrimPlayer;
 import ac.grim.grimac.shaded.com.github.retrooper.packetevents.protocol.player.User;

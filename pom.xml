@@ -96,7 +96,7 @@
         <dependency>
             <groupId>com.github.GrimAnticheat</groupId>
             <artifactId>Grim</artifactId>
-            <version>60f503d</version>
+            <version>5a0a04d</version>
             <classifier>all</classifier>
             <scope>provided</scope>
         </dependency>
