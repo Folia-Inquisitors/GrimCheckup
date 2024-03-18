@@ -50,6 +50,7 @@ public final class GrimCheckup extends SimplePlugin implements Listener {
         AbstractCheck check = event.getCheck();
         if (disabledChecks.contains(check.getConfigName())) {
             event.setCancelled(true);
+            check.setEnabled(false);
         }
     }
 
