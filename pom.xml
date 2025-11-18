@@ -69,8 +69,9 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
+            <id>grimac-snapshots</id>
+            <name>GrimAC's Maven Repository</name>
+            <url>https://repo.grim.ac/snapshots</url>
         </repository>
     </repositories>
 
@@ -94,10 +95,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.GrimAnticheat</groupId>
-            <artifactId>Grim</artifactId>
-            <version>5a0a04d</version>
-            <classifier>all</classifier>
+            <groupId>ac.grim.grimac</groupId>
+            <artifactId>GrimAPI</artifactId>
+            <version>1.1.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

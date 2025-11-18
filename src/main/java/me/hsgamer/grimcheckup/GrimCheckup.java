@@ -1,21 +1,21 @@
 package me.hsgamer.grimcheckup;
 
 import ac.grim.grimac.api.AbstractCheck;
-import ac.grim.grimac.api.events.FlagEvent;
-import ac.grim.grimac.manager.CheckManager;
-import ac.grim.grimac.player.GrimPlayer;
-import ac.grim.grimac.shaded.com.github.retrooper.packetevents.protocol.player.User;
-import ac.grim.grimac.shaded.com.github.retrooper.packetevents.protocol.player.UserProfile;
-import com.google.common.collect.ClassToInstanceMap;
+import ac.grim.grimac.api.GrimAPIProvider;
+import ac.grim.grimac.api.GrimAbstractAPI;
+import ac.grim.grimac.api.GrimUser;
+import ac.grim.grimac.api.event.EventBus;
+import ac.grim.grimac.api.event.events.FlagEvent;
+import ac.grim.grimac.api.event.events.GrimJoinEvent;
+import ac.grim.grimac.api.plugin.BasicGrimPlugin;
+import ac.grim.grimac.api.plugin.GrimPlugin;
 import me.hsgamer.hscore.bukkit.config.BukkitConfig;
 import me.hsgamer.hscore.bukkit.simpleplugin.SimplePlugin;
 import me.hsgamer.hscore.config.PathString;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public final class GrimCheckup extends SimplePlugin implements Listener {
     private final BukkitConfig config = new BukkitConfig(this);
@@ -25,36 +25,46 @@ public final class GrimCheckup extends SimplePlugin implements Listener {
     public void enable() {
         config.setup();
 
-        GrimPlayer grimPlayer = fakeGrimPlayer();
-        CheckManager checkManager = new CheckManager(grimPlayer);
-        ClassToInstanceMap<AbstractCheck> checks = checkManager.allChecks;
-
-        checks.forEach((clazz, check) -> {
-            String configName = check.getConfigName();
-            PathString pathString = new PathString(configName);
-            config.setIfAbsent(pathString, true);
-
-            Object value = config.getNormalized(pathString);
+        config.getNormalizedValues(false).forEach((key, value) -> {
+            String check = PathString.toPath(key);
             if (value instanceof Boolean && !(Boolean) value) {
-                disabledChecks.add(configName);
+                disabledChecks.add(check);
             }
         });
 
-        config.save();
+        GrimAbstractAPI api = GrimAPIProvider.get();
+        GrimPlugin plugin = new BasicGrimPlugin(
+                this.getLogger(),
+                this.getDataFolder(),
+                this.getDescription().getVersion(),
+                this.getDescription().getDescription(),
+                this.getDescription().getAuthors()
+        );
 
-        registerListener(this);
-    }
+        EventBus eventBus = api.getEventBus();
 
-    @EventHandler
-    public void onFlag(FlagEvent event) {
-        AbstractCheck check = event.getCheck();
-        if (disabledChecks.contains(check.getConfigName())) {
-            event.setCancelled(true);
-        }
-    }
+        eventBus.subscribe(plugin, FlagEvent.class, event -> {
+            String check = event.getCheck().getConfigName();
+            if (disabledChecks.contains(check)) {
+                event.setCancelled(true);
+            }
+        });
 
-    private GrimPlayer fakeGrimPlayer() {
-        User user = new User(null, null, null, new UserProfile(UUID.randomUUID(), "Fake"));
-        return new GrimPlayer(user);
+        eventBus.subscribe(plugin, GrimJoinEvent.class, event -> {
+            GrimUser grimUser = event.getUser();
+
+            boolean configChanged = false;
+            for (AbstractCheck abstractCheck : grimUser.getChecks()) {
+                PathString path = new PathString(abstractCheck.getConfigName());
+                if (!config.contains(path)) {
+                    config.set(path, true);
+                    configChanged = true;
+                }
+            }
+
+            if (configChanged) {
+                config.save();
+            }
+        });
     }
 }
